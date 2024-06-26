@@ -1,0 +1,37 @@
+openapi: 3.0.0
+info:
+  title: PubMed Search API
+  version: 1.0.0
+paths:
+  /search:
+    get:
+      summary: Search PubMed
+      description: Performs a search query on PubMed and returns the results.
+      parameters:
+        - in: query
+          name: term
+          required: true
+          schema:
+            type: string
+          description: The search query term.
+      responses:
+        '200':
+          description: A list of PubMed article IDs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string

@@ -2,18 +2,39 @@ openapi: 3.0.0
 info:
   title: PubMed Search API
   version: 1.0.0
+servers:
+  - url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils
 paths:
-  /search:
+  /esearch.fcgi:
     get:
       summary: Search PubMed
       description: Performs a search query on PubMed and returns the results.
       parameters:
+        - in: query
+          name: db
+          required: true
+          schema:
+            type: string
+          description: The database to search (e.g., pubmed).
         - in: query
           name: term
           required: true
           schema:
             type: string
           description: The search query term.
+        - in: query
+          name: retmode
+          required: true
+          schema:
+            type: string
+            enum: [json]
+          description: The return mode (e.g., json).
+        - in: query
+          name: api_key
+          required: true
+          schema:
+            type: string
+          description: Your API key.
       responses:
         '200':
           description: A list of PubMed article IDs
@@ -22,10 +43,13 @@ paths:
               schema:
                 type: object
                 properties:
-                  results:
-                    type: array
-                    items:
-                      type: string
+                  esearchresult:
+                    type: object
+                    properties:
+                      idlist:
+                        type: array
+                        items:
+                          type: string
         '400':
           description: Invalid input
           content:

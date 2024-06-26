@@ -17,12 +17,14 @@ paths:
           schema:
             type: string
           description: The database to search (e.g., pubmed).
+          example: pubmed
         - in: query
           name: term
           required: true
           schema:
             type: string
           description: The search query term.
+          example: cancer
         - in: query
           name: retmode
           required: true
@@ -30,12 +32,14 @@ paths:
             type: string
             enum: [json]
           description: The return mode (e.g., json).
+          example: json
         - in: query
           name: api_key
           required: true
           schema:
             type: string
           description: Your API key.
+          example: ce4f29dcd12b720518ac5ec6e868dc884508
       responses:
         '200':
           description: A list of PubMed article IDs
@@ -53,6 +57,15 @@ paths:
                           type: string
         '400':
           description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Server error
           content:
             application/json:
               schema:
